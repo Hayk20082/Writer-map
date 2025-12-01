@@ -1,0 +1,330 @@
+:root {
+    --bg-color: #ffffff;
+    --card-bg: #1a1a20;
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0a0b0;
+    --accent: #d4af37;
+    --accent-glow: rgba(212, 175, 55, 0.3);
+    --line-color: #333;
+    --font-main: 'Inter', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+#app {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+/* Navigation / Header */
+header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--line-color);
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--accent);
+    text-decoration: none;
+    font-family: var(--font-serif);
+}
+
+.back-btn {
+    background: none;
+    border: 1px solid var(--line-color);
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* Main Layout (Map View) */
+.main-container {
+    display: grid;
+    grid-template-columns: 250px 1fr 250px;
+    gap: 2rem;
+    height: calc(100vh - 150px);
+}
+
+/* Writers Lists */
+.writers-column {
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+
+.writer-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+    border: 1px solid transparent;
+}
+
+.writer-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.writer-item span {
+    color: #000000; /* Black color for writer names */
+}
+
+.writer-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Map Container - WHITE BACKGROUND */
+.map-view {
+    position: relative;
+    background: #ffffff;
+    /* White background */
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--line-color);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease;
+}
+
+.map-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform-origin: center center;
+}
+
+/* Info Window Overlay */
+.map-info-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: rgba(26, 26, 32, 0.98);
+    border: 2px solid var(--accent);
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease 0.2s;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    text-align: center;
+}
+
+.map-view.active .map-info-window {
+    opacity: 1;
+    pointer-events: all;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.map-info-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.map-info-close:hover {
+    color: var(--accent);
+}
+
+/* Hide tooltips when active */
+.map-view.active .map-tooltip {
+    display: none;
+}
+
+/* SVG Layer for Lines */
+.map-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Map Points */
+.map-point {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.3s;
+    border: 2px solid #ffffff;
+}
+
+.map-point:hover {
+    transform: translate(-50%, -50%) scale(2.5);
+    z-index: 10;
+}
+
+/* Tooltip for Map */
+.map-tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 20;
+    transform: translate(-50%, -150%);
+    opacity: 0;
+    transition: opacity 0.2s;
+    border: 1px solid var(--line-color);
+    font-size: 0.85rem;
+}
+
+.map-point:hover+.map-tooltip {
+    opacity: 1;
+}
+
+/* Profile & Detail Views */
+.profile-header {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 4rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.profile-bio {
+    max-width: 600px;
+}
+
+.event-detail {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    padding: 3rem;
+    border-radius: 16px;
+    border: 1px solid var(--line-color);
+    animation: fadeIn 0.5s ease;
+}
+
+.event-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--line-color);
+    padding-bottom: 1rem;
+}
+
+.event-year {
+    font-size: 1.5rem;
+    color: var(--accent);
+    font-family: var(--font-serif);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+    .main-container {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .map-view {
+        height: 400px;
+        order: -1;
+        margin-bottom: 2rem;
+    }
+
+    .writers-column {
+        max-height: 300px;
+    }
+}
