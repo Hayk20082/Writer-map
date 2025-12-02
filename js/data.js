@@ -687,7 +687,7 @@ const WRITERS = [
         id: "demirchyan",
         name: "Դերենիկ Դեմիրճյան",
         nameEn: "Derenik Demirchyan",
-        color: "#f39c12",
+        color: "red",
         bio: "Armenian writer.",
         photo: "images.webp",
         events: [
