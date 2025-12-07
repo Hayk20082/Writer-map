@@ -149,7 +149,7 @@ function renderHome() {
             <div class="writers-column">
                 <h3>Գրողներ</h3>
                 ${leftWriters.map(w => `
-                    <div class="writer-item" style="border-left: 3px solid ${w.color}; background-color: ${hexToRgba(w.color, 0.1)};" onclick="window.location.hash = '#writer/${w.id}'">
+                    <div class="writer-item" style="border-left: 3px solid ${w.color}; background-color: ${hexToRgba(w.color, 0.1)};">
                         <img src="${w.photo}" alt="${w.name}">
                         <span>${w.name}</span>
                     </div>
@@ -161,7 +161,7 @@ function renderHome() {
             <div class="writers-column">
                 <h3>&nbsp;</h3>
                 ${rightWriters.map(w => `
-                    <div class="writer-item" style="border-right: 3px solid ${w.color}; background-color: ${hexToRgba(w.color, 0.1)};" onclick="window.location.hash = '#writer/${w.id}'">
+                    <div class="writer-item" style="border-right: 3px solid ${w.color}; background-color: ${hexToRgba(w.color, 0.1)};">
                         <span>${w.name}</span>
                         <img src="${w.photo}" alt="${w.name}">
                     </div>
